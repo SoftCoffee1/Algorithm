@@ -1,0 +1,73 @@
+
+################ O(nlogn) solution ##################
+
+# 현재 탐색 구간의 종료시각과, 최대 시작시각의 차이가 1초 이상 나면 두 구간은 같은 1초짜리 구간에 넣을 수 없으므로,
+# 힙에 들어있는 시작시각을 빼고, 같은 과정을 반복한다!
+import heapq
+
+def string2Int(string):
+
+    length = len(string)
+    
+    hour, minute, second = string[11:23].split(":")
+
+    hour = int(hour)
+    minute = int(minute)
+    second = float(second)
+
+    endTime = hour * 3600000 + minute * 60000 + int(second * 1000)
+
+    return endTime    
+    
+
+def solution(lines):
+
+    # 정수로 변환된 문자열 데이터 저장 리스트
+    logData = []
+
+    # 1초동안 겹치는 구간 로그 개수의 최댓값을 구하기 위한 우선순위 큐
+    heap = []
+
+    # 로그의 개수
+    length = len(lines)
+    
+    for string in lines:
+        logData.append(string2Int(string))
+
+    # 현재 탐색하는 중에 카운트 되어 있는 로그 개수
+    count = 0
+
+    # 정답 저장 변수
+    answer = 0
+
+    # 시작시간들을 최대 힙에 집어넣고,
+    # 매번 현재 탐색 로그와 힙의 최상단노드값의 차이를 비교!
+    # 그 차이가 1초보다 크면 현재 탐색 로그와의 교집합은 없으므로 count -= 1 해줌
+
+    for i in range(length-1,-1,-1):
+        nowLen = len(lines[i])
+       
+        nowStart = logData[i] - int(float(lines[i][24:nowLen-1]) * 1000) + 1
+
+        #print("--------------------------------------------")
+        #print(f"nowStart : {nowStart}")
+        heapq.heappush(heap, -nowStart)
+
+        count += 1
+        while True:
+            #print(f"max : {-heap[0]}")
+            if logData[i] + 1000 <= -heap[0]:
+                heapq.heappop(heap)
+                count -= 1
+
+            else:
+                break
+
+
+        if answer < count:
+            answer = count
+
+        #print()
+                
+
+    return answer
