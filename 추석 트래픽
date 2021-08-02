@@ -1,0 +1,77 @@
+# 문자열을 입력받으면, 시작시간과 종료시간 두개의 정수를 갖는 리스트 
+def string2Int(string):
+	
+	# 현재 문자열의 길이
+    length = len(string)
+    
+	# 시, 분, 초 슬라이싱
+    hour, minute, second = string[11:23].split(":")
+
+    hour = int(hour)
+    minute = int(minute)
+    second = float(second)
+
+	# 처리시간
+    processTime = float(string[24:length-1])
+	
+	# 종료시간
+    endTime = round(hour * 3600 + minute * 60 + second,3)
+	
+	# 시작 시간
+    startTime = round(endTime - processTime + 0.001,3)
+
+
+    return [startTime, endTime]
+    
+
+
+def count(spot, logData):
+
+    counter = 0
+
+    nowCheckS = spot
+    nowCheckE = round(spot + 0.999, 3)
+    
+    for log in logData:
+        startLog = log[0]
+        endLog = log[1]
+
+        # 겹치는 부분이 조금이라도 있는 로그는 세기!
+        if not (nowCheckS > endLog or nowCheckE < startLog):
+            #print(f"nowCheckS : {nowCheckS}")
+            #print(f"endLog : {endLog}")
+            #print(f"nowCheckE : {nowCheckE}")
+            #print(f"startLog : {startLog}")
+            #print()
+            counter += 1
+
+    #print("--------------------------------------------")
+    return counter
+    
+    
+
+def solution(lines):
+
+    logData = []
+    
+    for string in lines:
+        logData.append(string2Int(string))
+
+    #print(*logData)
+
+    result = []
+    for log in logData:
+        start = log[0]
+        end = log[1]
+        result.append(count(start, logData))
+        result.append(count(end, logData))
+
+
+    return max(result)
+
+
+# main
+lines = ["2016-09-15 01:00:04.002 2.0s", "2016-09-15 01:00:07.000 2s"]
+
+print(solution(lines))
+
