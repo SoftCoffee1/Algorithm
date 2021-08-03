@@ -1,0 +1,23 @@
+# 1. 모든 recursive 한 방법은 iterable 한 방법으로 변환이 가능하다!
+
+
+def solution(k, room_number):
+    room_dic = {}
+    ret = []
+    for i in room_number:
+        n = i
+        visit = [n]
+        
+        # recursive 를 iterable 형태로 변환시키는 부분!
+        while n in room_dic:
+            n = room_dic[n]
+            visit.append(n)
+        
+        # 결과 배열에 호텔방을 append
+        ret.append(n)
+        
+        # while loop를 통해 이미 배정이 된 호텔방들의 parent를 모두 업데이트!
+        for j in visit:
+            room_dic[j] = n+1
+            
+    return ret
