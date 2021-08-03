@@ -1,0 +1,73 @@
+# 1. 카카오 문제 특징 : 백준과 달리 범위를 크게 주지 않고, 완전 탐색을 통해 풀이하는 문제를 출제하는 경우가 많다.
+# 2. 딕셔너리 자료형 : 인덱스값이 정수형이 아닌 경우에 사용이 용이하지만, 인덱스 중복은 처리가 용이하지 않다.
+                  -----> 인덱스 중복이 일어나는 경우에는 이차원 배열을 통해 구현하는 방법이 있음. (아래의 문제풀이도 2차원 배열을 활용)
+                  
+              
+##### 3. iterable objet redundacy check! --> **sort**, and look for the same one using loop!  ####
+
+
+
+def matched(banned, user):
+
+    # 길이가 다르면 False
+    if len(user) != len(banned):
+        return False
+
+    # 매칭 안된것 False
+    for i in range(len(user)):
+        if user[i] != banned[i] and banned[i] != "*":
+            return False
+  
+    # 매칭이 된 것은 True
+    return True
+
+
+def dfs(DATA, index, nowCom):
+    global answer
+    global result_list
+
+
+    length = len(DATA)
+
+    if index == length:
+        nowCom = sorted(nowCom)
+        
+        for result in result_list:
+            if nowCom == result:
+                return
+
+
+        result_list.append(nowCom)
+        answer += 1
+        return
+
+    for user_id in DATA[index]:
+        if user_id not in nowCom:
+            dfs(DATA, index+1, nowCom + [user_id])
+    
+        
+    
+
+
+def solution(user_id, banned_id):
+    global answer
+    global result_list
+
+    answer = 0
+
+    # 불량 사용자를 인덱스값으로 하고 제재 사용자들을 그 원소로 하는 리스트를 2차원 배열로 구현
+    DATA = [[] for _ in range(len(banned_id))]
+    
+    for banned in range(len(banned_id)):
+        for user in user_id:
+            if matched(banned_id[banned], user):
+                DATA[banned].append(user)
+    
+    # 만들어지는 제재 사용자들의 모든 경우를 저장
+    result_list = []
+
+
+    dfs(DATA, 0, [])
+    
+             
+    return answer
