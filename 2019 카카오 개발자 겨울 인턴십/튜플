@@ -1,0 +1,44 @@
+def solution(s):
+    s = s[1:len(s)-1]
+
+    parsedS = []
+    
+    char = ""
+    opened = False
+    temp = set()
+    for i in s:
+        
+        if opened:
+        
+            if "0" <= i <= "9":
+                char += i
+
+            elif i == ",":
+                temp.add(int(char))
+                char = ""
+
+            elif i == "}":
+                temp.add(int(char))
+                parsedS.append(temp)
+                opened = False
+                temp = set()
+                char = ""
+
+        else:
+
+            if i == "{":
+                opened = True
+
+    
+    parsedS = sorted(parsedS, key = lambda x : len(x))
+            
+            
+    answer = []
+    previousSET = set()
+    for SET in parsedS:
+        now = SET - previousSET
+        answer.append(int(now.pop()))
+        previousSET = SET
+        
+    
+    return list(answer)
