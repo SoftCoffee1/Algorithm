@@ -1,0 +1,35 @@
+def solution(board, moves):
+
+    answer = 0
+    
+    stack = []
+
+    secondTop = -1
+    
+    for move in moves:
+        move -= 1
+
+        picked = False
+        for i in range(len(board)):
+            if board[i][move] != 0:
+                stack.append(board[i][move])
+                board[i][move] = 0
+                picked = True
+                break
+
+        if picked:
+
+            if stack[-1] == secondTop:
+                answer += 2
+                stack.pop()
+                stack.pop()
+
+            if stack:
+                secondTop = stack[-1]
+            else:
+                secondTop = -1
+
+        
+        
+        
+    return answer
