@@ -1,0 +1,72 @@
+# 1. 콘은 막차를 타러 와야한다!
+# 2. 사람들이 막차에 꽉 차게 타는 경우 -> 막차를 마지막에 탄 사람보다 1분 일찍 도착하면 됨
+# 3. 사람들이 막차를 꽉 차게 타지 않는 경우 -> 막차시간 딱 맞춰서 도착하면 됨
+
+
+def string2Int(string):
+    hour = int(string[:2])
+    minute = int(string[3:])
+
+    result = hour * 60 + minute
+
+    return result
+
+
+def Int2String(integer):
+    hour = str(integer // 60)
+    minute = str(integer % 60)
+
+    if len(hour) == 1:
+        hour = "0" + hour
+
+    if len(minute) == 1:
+        minute = "0" + minute
+
+
+    return hour + ":" +  minute    
+
+
+def solution(n, t, m, timetable):
+
+    timeQueue = []
+
+    for item in timetable:
+        heapq.heappush(timeQueue, string2Int(item))
+        
+    nowShuttle = 540
+    
+    for shuttleNum in range(1,n+1):
+        for occupied in range(1,m+1):
+
+            if len(timeQueue) == 0:
+                break
+            
+            nowPerson = timeQueue[0]
+
+            # 현재 셔틀을 못타므로 다음버스로 가기!
+            if nowPerson > nowShuttle:
+                break
+
+
+            heapq.heappop(timeQueue)
+
+
+            # 막차이면
+            if shuttleNum == n:
+
+                # 버스의 마지막자리까지 찬 경우
+                # 제일 늦게 탄 사람보다 1분 일찍 타기!
+                if occupied == m:
+
+                    answer = Int2String(nowPerson-1)
+                    return answer
+
+        nowShuttle += t
+
+
+    # 셔틀 막차시간에 딱 맞춰서 타는 경우!
+    answer = Int2String(nowShuttle - t)
+
+            
+
+    return answer
