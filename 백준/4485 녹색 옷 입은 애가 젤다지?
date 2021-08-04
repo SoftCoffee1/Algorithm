@@ -1,0 +1,71 @@
+# 1 55 ~ 2 12
+# 4485 녹색 옷 입은 애가 젤다지?
+# https://www.acmicpc.net/problem/4485
+
+
+# 1. 기본적인 다익스트라 문제
+# 2. 우선순위 큐를 이용하여 풀어봄
+
+import heapq
+import sys
+input = sys.stdin.readline
+INF = int(1e9)
+
+
+dx = [1,-1,0,0]
+dy = [0,0,1,-1]
+
+
+result = []
+
+while True:
+    N = int(input().rstrip())
+
+    if N == 0:
+        break
+
+
+    BOARD = []
+    for _ in range(N):
+        BOARD.append(list(map(int, input().rstrip().split())))
+
+    # 최솟값 저장하는 2차원 배열
+    rupeeBOARD = [[INF for _ in range(N)] for _ in range(N)]
+
+    # 우선순위 큐로 활용하려는 리스트
+    queue = []
+
+    rupeeBOARD[0][0] = BOARD[0][0]
+    heapq.heappush(queue, (rupeeBOARD[0][0], 0, 0))
+
+
+    while queue:
+        curRupee, x, y = heapq.heappop(queue)
+        
+        # 도착지점에 도달하면 그 자체가 곧 최솟값이므로 while loop 빠져나오기
+        if x == N - 1 and y == N - 1:
+            result.append(curRupee)
+            break
+
+
+        for i in range(4):
+
+            nx = x + dx[i]
+            ny = y + dy[i]
+
+            if not (0 <= nx < N and 0 <= ny < N):
+                continue
+
+
+            if curRupee + BOARD[nx][ny] >= rupeeBOARD[nx][ny]:
+                continue
+
+
+            rupeeBOARD[nx][ny] = curRupee + BOARD[nx][ny]
+            heapq.heappush(queue, (rupeeBOARD[nx][ny], nx,ny))
+                
+
+            
+# 결과 출력
+for i in range(len(result)):
+    print(f"Problem {i+1}: {result[i]}")
