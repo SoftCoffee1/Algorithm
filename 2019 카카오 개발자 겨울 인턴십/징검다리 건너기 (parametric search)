@@ -1,0 +1,46 @@
+# 건널 수 있는 친구들의 최대 수!
+# 최댓값 파라메트릭 서치로 접근이 가능하다!
+# 현재 인원이 건널 수 있는 지의 여부는,
+# 현재인원 - 1이 건넌 상황에서의 연속된 0의 개수가 k개 이상 --> 불가능!
+# 현재인원 - 1이 건넌 상황에서의 연속된 0의 개수가 k개 미만 --> 가능!
+    
+
+def parametric_search(stones, num, k):
+
+    count = 0
+    for stone in stones:
+
+        if stone - num < 0:
+            count += 1
+
+        else:
+            count = 0
+
+
+        if count >= k:
+            return False
+
+
+
+    return True
+    
+
+# 최댓값 파라메트릭 서치!
+def solution(stones , k):
+
+    start = 1
+    end = max(stones)
+
+
+    while start < end:
+
+        mid = (start + end + 1) // 2
+
+        if parametric_search(stones, mid, k):
+            start = mid
+
+        else:
+            end = mid - 1
+        
+
+    return start
