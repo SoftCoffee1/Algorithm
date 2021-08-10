@@ -1,4 +1,4 @@
-# 1. 모든 recursive 한 방법은 iterable 한 방법으로 변환이 가능하다!
+# 1. 모든 recursive 한 방법은 iterative 한 방법으로 변환이 가능하다!
 
 
 def solution(k, room_number):
