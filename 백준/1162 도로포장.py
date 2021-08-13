@@ -13,6 +13,9 @@
 # 카카오 2020 인턴십 "경주로 건설" 문제로 유사한 부분이 있는 문제이다.
 
 
+##### INF값을 int(1e9)로 설정해도 되는지 항상 체크하자.. 체크 귀찮으면 그냥 INF = sys.maxsize로 설정하자!! --> int(1e9)로 하니까 66퍼에서 틀리다고 떴었음.
+
+
 import heapq
 import sys
 input = sys.stdin.readline
