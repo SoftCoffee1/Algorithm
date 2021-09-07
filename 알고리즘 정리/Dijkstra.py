@@ -40,7 +40,7 @@ def dijkstra(start):
             
             # 여기까지 온 것은 최단경로를 업데이트 해야한다는 의미로,
             # 최단경로 업데이트를 하고
-            # 큐에 현재까지의 최단겨로와, 노드번호를 넣어준다.
+            # 큐에 현재까지의 최단경로와, 노드번호를 넣어준다.
             # 최단경로가 앞에 오는 튜플을 형성해야 하는데, 최소 힙의 특성상 앞의 원소부터 체크하기 때문이다.
             dist[there] = curCost + nextCost
             heapq.heappush(queue, (dist[there], there))
