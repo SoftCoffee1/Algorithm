@@ -1,0 +1,30 @@
+## 구간 합 구하기 5
+## https://www.acmicpc.net/problem/11660
+
+## 누적합의 속도는 itertools 모듈안에 있는 안에있는 accumulate를 활용하여 하면 시간 절약이 가능!
+
+from itertools import accumulate
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().rstrip().split())
+S = [[0 for _ in range(N+1)]]
+
+for _ in range(N):
+    S.append([0]+list(map(int, input().rstrip().split())))
+
+
+for i in range(1,N+1):
+    S[i] = list(accumulate(S[i]))
+
+for i in range(1,N+1):
+    for j in range(1,N+1):
+        S[i][j] += S[i-1][j]
+
+
+
+for _ in range(M):
+    x1, y1, x2, y2 = map(int, input().rstrip().split())
+
+    result = S[x2][y2] - S[x2][y1-1] - S[x1-1][y2] + S[x1-1][y1-1]
+    print(result)
