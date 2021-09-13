@@ -21,3 +21,13 @@ result = S[j] - S[i-1]
 print(result)
 
 """
+
+
+
+
+"""
+<<관련 알고리즘>>
+1. kedane's algorithm : finding maximum subarray in O(N)  : 백준 10211
+
+
+"""
