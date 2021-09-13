@@ -5,5 +5,19 @@
 
 ##################### 실제 코드 ##########################
 
+N = int(input().rstrip())
+arr = list(map(int, input().rstrip().split()))
+S = [0] + arr                                    # --> 누적합 알고리즘을 구동시키기 위한 전처리 배열
+
+for i in range(1,N+1):
+    S[i] += S[i-1]
+
+## arr배열의 i번째에서 j번째 수를 모두 더한 값을 구하는 문제. (1 <= i,j <= N)
+i, j = map(int, input().rstrip().split())
+
+
+## S배열을 이용하여 결과값을 구하는 과정
+result = S[j] - S[i-1]
+print(result)
 
 """
