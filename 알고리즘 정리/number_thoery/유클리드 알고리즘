@@ -1,0 +1,23 @@
+1. GCD 구하기
+
+int gcd(int a, int b){
+    return b ? gcd(b, a % b) : a;
+}
+
+
+2. LCM 구하기
+
+int lcm(int a, int b){
+    return a * b / gcd(a,b);
+}
+
+
+3. 확장된 유클리드 알고리즘
+ --> ax + ny = gcd(a,n)이라는 부정방정식의 정수 특수해 구하는 알고리즘
+
+// return {g, x, y} s.t ax + ny = gcd(a,b) = g
+tuple<ll, ll, ll> ext_gcd(ll a, ll n){
+    if (n == 0) return {a, 1, 0};
+    auto [g, x, y] = ext_gcd(n, a%n);
+    return {g, y, x - a/n*y};
+}
